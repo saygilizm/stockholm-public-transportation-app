@@ -1,0 +1,23 @@
+package com.sametsaygili.dto;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import java.io.Serializable;
+import lombok.Data;
+
+
+@Data
+public class Line extends ResultContent implements Serializable {
+
+  @JsonProperty(value = "LineNumber")
+  private String lineNumber;
+
+  @JsonProperty(value = "LineDesignation")
+  private String lineDesignation;
+
+  @JsonProperty(value = "DefaultTransportModeCode")
+  private String defaultTransportModeCode;
+
+  @JsonProperty(value = "DefaultTransportMode")
+  private String defaultTransportMode;
+
+}
