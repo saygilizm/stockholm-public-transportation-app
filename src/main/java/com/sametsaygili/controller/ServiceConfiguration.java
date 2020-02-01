@@ -1,6 +1,6 @@
 package com.sametsaygili.controller;
 
-import lombok.Getter;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@Getter
+@Data
 public class ServiceConfiguration {
 
   @Value("${sl.api.url}")

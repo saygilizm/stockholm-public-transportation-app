@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LineData<T> implements Serializable {
 
+  private static final long serialVersionUID = 982679563345898554L;
+
   @JsonProperty(value = "StatusCode")
   private Integer statusCode;
 

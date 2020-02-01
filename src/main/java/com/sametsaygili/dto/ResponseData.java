@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ResponseData<T> implements Serializable {
 
+  private static final long serialVersionUID = -1635764117443725849L;
+
   @JsonProperty(value = "Version")
   private String version;
 

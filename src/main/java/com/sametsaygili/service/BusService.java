@@ -3,7 +3,7 @@ package com.sametsaygili.service;
 import com.sametsaygili.dto.Journey;
 import com.sametsaygili.dto.Line;
 import com.sametsaygili.dto.Stop;
-import com.sametsaygili.error.LineNotFoundException;
+import com.sametsaygili.handler.error.LineNotFoundException;
 import com.sametsaygili.repository.JourneyRepository;
 import com.sametsaygili.repository.LineRepository;
 import com.sametsaygili.repository.StopRepository;
@@ -41,13 +41,15 @@ public class BusService {
     Queue<SimpleEntry<Line, Integer>> linePQ = new PriorityQueue<>(
         (a, b) -> b.getValue() - a.getValue());
 
-    for (Line line : lineRepository.listLines().get()) {
-      int stopCount = journeyRepository.retrieveJourney(line.getLineNumber()).get().size();
-      linePQ.add(new SimpleEntry<>(line, stopCount));
-    }
 
-    while (lineList.size() < 10 && !linePQ.isEmpty()) {
+    lineRepository.listLines().get().stream().forEach((item) ->{
+      int stopCount = journeyRepository.retrieveJourney(item.getLineNumber()).get().size();
+      linePQ.add(new SimpleEntry<>(item, stopCount));
+    });
+
+    while (!linePQ.isEmpty()) {
       lineList.add(linePQ.remove().getKey());
+      if(lineList.size() == 10) break;
     }
 
     return lineList;
@@ -60,11 +62,11 @@ public class BusService {
 
     List<Journey> routeList = journeyRepository.retrieveJourney(id).orElseThrow(LineNotFoundException::new);
 
-    for (Journey journey : routeList) {
-      Optional<Stop> stop = stopRepository.retrieveStop(journey.getJourneyPatternPointNumber());
+    routeList.stream().forEach((item)->{
+      Optional<Stop> stop = stopRepository.retrieveStop(item.getJourneyPatternPointNumber());
       if(stop.isPresent())
         stopList.add(stop.get());
-    }
+    });
 
     return stopList;
   }

@@ -1,4 +1,4 @@
-package com.sametsaygili.error;
+package com.sametsaygili.handler.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

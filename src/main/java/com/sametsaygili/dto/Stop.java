@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class Stop extends ResultContent implements Serializable {
 
+  private static final long serialVersionUID = 2767927720010394433L;
+
   @JsonProperty(value = "StopPointNumber")
   private String stopPointNumber;
 
