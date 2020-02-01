@@ -12,7 +12,7 @@ public enum Model {
   private String value;
 
   Model(String value){
+
     this.value = value;
   }
-
 }

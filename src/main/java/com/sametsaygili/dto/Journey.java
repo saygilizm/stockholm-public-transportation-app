@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Journey extends ResultContent implements Serializable {
 
   private static final long serialVersionUID = 2022910902412283846L;

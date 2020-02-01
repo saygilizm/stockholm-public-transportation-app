@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Line extends ResultContent implements Serializable {
 
   private static final long serialVersionUID = -804374467105715136L;

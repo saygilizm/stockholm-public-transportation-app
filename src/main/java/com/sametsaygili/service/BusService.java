@@ -9,6 +9,7 @@ import com.sametsaygili.repository.LineRepository;
 import com.sametsaygili.repository.StopRepository;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.PriorityQueue;
@@ -38,14 +39,17 @@ public class BusService {
 
     List<Line> lineList = new ArrayList<>();
 
-    Queue<SimpleEntry<Line, Integer>> linePQ = new PriorityQueue<>(
-        (a, b) -> b.getValue() - a.getValue());
+    Queue<SimpleEntry<Line, Integer>> linePQ = new PriorityQueue<>((a, b) -> b.getValue() - a.getValue());
 
-
-    lineRepository.listLines().get().stream().forEach((item) ->{
-      int stopCount = journeyRepository.retrieveJourney(item.getLineNumber()).get().size();
-      linePQ.add(new SimpleEntry<>(item, stopCount));
-    });
+    List<Line> journeyItems = lineRepository.listLines().orElse(Collections.emptyList());
+    journeyItems.stream()
+        .forEach(item ->{
+          Optional<List<Journey>> journey = journeyRepository.retrieveJourney(item.getLineNumber());
+          int stopCount = 0;
+          if(journey.isPresent())
+            stopCount = journey.get().size();
+          linePQ.add(new SimpleEntry<>(item, stopCount));
+        });
 
     while (!linePQ.isEmpty()) {
       lineList.add(linePQ.remove().getKey());
@@ -62,14 +66,13 @@ public class BusService {
 
     List<Journey> routeList = journeyRepository.retrieveJourney(id).orElseThrow(LineNotFoundException::new);
 
-    routeList.stream().forEach((item)->{
-      Optional<Stop> stop = stopRepository.retrieveStop(item.getJourneyPatternPointNumber());
-      if(stop.isPresent())
-        stopList.add(stop.get());
-    });
+    routeList.stream()
+        .forEach(item->{
+          Optional<Stop> stop = stopRepository.retrieveStop(item.getJourneyPatternPointNumber());
+          if(stop.isPresent())
+            stopList.add(stop.get());
+        });
 
     return stopList;
   }
-
-
 }

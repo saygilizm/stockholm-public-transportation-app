@@ -1,14 +1,13 @@
 package com.sametsaygili.handler.error;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class LineNotFoundException extends RuntimeException {
 
-  private long id;
+  private static final long serialVersionUID = -1070340146062150878L;
 
+  private long id;
 }

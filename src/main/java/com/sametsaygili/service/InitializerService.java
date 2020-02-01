@@ -55,9 +55,8 @@ public class InitializerService {
     LineData result = slApiRestCaller.retrieveLineData(queryParams, new ParameterizedTypeReference<LineData<Line>>() {	});
 
     List<Line> lineList = result.getResponseData().getResult();
-    for(int i = 0 ; i < lineList.size(); i++){
-      lineRepository.persistLine(lineList.get(i));
-    }
+    lineList.stream()
+        .forEach(item -> lineRepository.persistLine(item));
 
     queryParams.remove(DEFAULT_TRANSFER_MODE_CODE);
     queryParams.put(MODEL, Model.STOP.getValue());
@@ -65,19 +64,15 @@ public class InitializerService {
 
     result = slApiRestCaller.retrieveLineData(queryParams, new ParameterizedTypeReference<LineData<Stop>>() {	});
     List<Stop> stopList = result.getResponseData().getResult();
-
-    for(Stop resultContent : stopList){
-      stopRepository.persistStop(resultContent);
-    }
+    stopList.stream()
+        .forEach(item -> stopRepository.persistStop(item));
 
     queryParams.remove(STOP_AREA_TYPE_CODE);
     queryParams.put(MODEL, Model.JOURNEY.getValue());
 
     result = slApiRestCaller.retrieveLineData(queryParams, new ParameterizedTypeReference<LineData<Journey>>() {	});
     List<Journey> journeyList = result.getResponseData().getResult();
-
-    for(Journey resultContent : journeyList){
-      journeyRepository.persistJourney(resultContent);
-    }
+    journeyList.stream()
+        .forEach(item -> journeyRepository.persistJourney(item));
   }
 }

@@ -18,15 +18,15 @@ public class SLApiRestCaller {
 
   public <T extends ResultContent> LineData<T> retrieveLineData(Map<String, String> queryParams, ParameterizedTypeReference<LineData<T>> type) {
 
-    UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(serviceConfiguration.getSlApiUrl())
+    UriComponentsBuilder builder = UriComponentsBuilder
+        .fromUriString(serviceConfiguration.getSlApiUrl())
         .queryParam("key", serviceConfiguration.getSlApiKey());
 
     queryParams.forEach((k, v) -> builder.queryParam(k, v));
 
     return serviceConfiguration
-        .getRestTemplate().exchange(builder.build().toUri(), HttpMethod.GET, null, type)
+        .getRestTemplate()
+        .exchange(builder.build().toUri(), HttpMethod.GET, null, type)
         .getBody();
-
   }
-
 }

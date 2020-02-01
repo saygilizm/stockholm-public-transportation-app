@@ -5,8 +5,8 @@ import com.sametsaygili.dto.Stop;
 import com.sametsaygili.service.BusService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,13 +20,13 @@ public class ServiceController {
     this.busService = busService;
   }
 
-  @RequestMapping("top10BusLines/")
+  @GetMapping("top10BusLines/")
   public List<Line> top10BusLinesWithMostBusStops() {
 
     return busService.getTop10BusLinesWithMostBusStops();
   }
 
-  @RequestMapping("getAllStops/{id}")
+  @GetMapping("getAllStops/{id}")
   public List<Stop> getAllBusStops(@PathVariable String id) {
 
     return busService.getAllBusStops(id);

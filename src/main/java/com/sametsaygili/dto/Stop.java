@@ -3,9 +3,11 @@ package com.sametsaygili.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.io.Serializable;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class Stop extends ResultContent implements Serializable {
 
   private static final long serialVersionUID = 2767927720010394433L;
